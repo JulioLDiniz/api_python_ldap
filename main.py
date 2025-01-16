@@ -23,6 +23,7 @@ app = FastAPI()
 @app.post('/auth')
 def user_login(inputs: UsuarioInput, expires_in: int = 30):
     
+    
     usuario = inputs.usuario
     senha = crypt_context.hash(inputs.senha)
     
@@ -30,8 +31,6 @@ def user_login(inputs: UsuarioInput, expires_in: int = 30):
     
 
     if acesso_ldap['status'] == False and acesso_ldap['code'] != 1:
-
-
         raise HTTPException(status.HTTP_401_UNAUTHORIZED,
             {
                 'status_code':status.HTTP_401_UNAUTHORIZED,
