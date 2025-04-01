@@ -13,6 +13,8 @@ from datetime import timedelta
 from pprint import pprint
 from classes.ldap_access import LDAPAccess
 
+from classes.model.usuario_model import UsuarioModel
+
 SECRET_KEY = config('SECRET_KEY')
 ALGORITHM = config('ALGORITHM')
 
@@ -46,19 +48,17 @@ def user_login(inputs: UsuarioInput, expires_in: int = 30):
         }
 
         access_token = jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
-
+        usuarioTK = UsuarioModel()
+        usuarioTK.criar_token(access_token, usuario)
         return {
             'access_token': access_token,
             'exp': exp
         }    
     
-    
-    
 
 
-
-if __name__ == '__main__':
-    uvicorn.run(app, port=8000)
+# if __name__ == '__main__':
+#     uvicorn.run(app, port=8000)
 
 
 
